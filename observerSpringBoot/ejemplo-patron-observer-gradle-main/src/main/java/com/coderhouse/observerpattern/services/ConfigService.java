@@ -14,10 +14,10 @@ public class ConfigService {
     @Value(value = "${user.test.rol}")
     private String userRol;
 
-    @Value(value = "${user.test.email}")
+
     private String userEmail;
 
-    @Value(value = "${user.test.phone}")
+
     private String userPhone;
 
     public void updateUserConfig(String userRolParam, String userEmailParam, String userPhoneParam) {
