@@ -1,0 +1,72 @@
+> use ecommerce
+switched to db ecommerce
+> db
+ecommerce
+> db.productos.insert({nombre:'Fideos', categoria:'Harina', precio:120, stock:20})
+WriteResult({ "nInserted" : 1 })
+> db.productos.insert({nombre:'Harina 0000', categoria:'Harina', precio:580, stock:30})
+WriteResult({ "nInserted" : 1 })
+> db.productos.insert({nombre:'Leche', categoria:'Lacteos', precio:900, stock:15})
+WriteResult({ "nInserted" : 1 })
+> db.productos.insert({nombre:'Yogurt', categoria:'Lacteos', precio:1280, stock:15})
+WriteResult({ "nInserted" : 1 })
+> db.productos.insert({nombre:'CocaCola', categoria:'Bebida', precio:1700, stock:40})
+WriteResult({ "nInserted" : 1 })
+> db.productos.insert({nombre:'Sprite', categoria:'Bebida', precio:2300, stock:40})
+WriteResult({ "nInserted" : 1 })
+> db.productos.insert({nombre:'Mayonesa', categoria:'Aderezos', precio:2860, stock:35})
+WriteResult({ "nInserted" : 1 })
+> db.productos.insert({nombre:'Ketchup', categoria:'Aderezos', precio:3350, stock:32})
+WriteResult({ "nInserted" : 1 })
+> db.productos.insert({nombre:'Savora', categoria:'Aderezos', precio:4320, stock:12})
+WriteResult({ "nInserted" : 1 })
+> db.productos.insert({nombre:'SalsaGolf', categoria:'Aderezos', precio:4990, stock:10})
+WriteResult({ "nInserted" : 1 })
+> db.getCollection('productos').find({})
+{ "_id" : ObjectId("61e828756b5f4c0ac6d5755c"), "nombre" : "Fideos", "categoria" : "Harina", "precio" : 120, "stock" : 20 }
+{ "_id" : ObjectId("61e828936b5f4c0ac6d5755d"), "nombre" : "Harina 0000", "categoria" : "Harina", "precio" : 580, "stock" : 30 }
+{ "_id" : ObjectId("61e828ae6b5f4c0ac6d5755e"), "nombre" : "Leche", "categoria" : "Lacteos", "precio" : 900, "stock" : 15 }
+{ "_id" : ObjectId("61e828be6b5f4c0ac6d5755f"), "nombre" : "Yogurt", "categoria" : "Lacteos", "precio" : 1280, "stock" : 15 }
+{ "_id" : ObjectId("61e828df6b5f4c0ac6d57560"), "nombre" : "CocaCola", "categoria" : "Bebida", "precio" : 1700, "stock" : 40 }
+{ "_id" : ObjectId("61e828f46b5f4c0ac6d57561"), "nombre" : "Sprite", "categoria" : "Bebida", "precio" : 2300, "stock" : 40 }
+{ "_id" : ObjectId("61e8294a6b5f4c0ac6d57562"), "nombre" : "Mayonesa", "categoria" : "Aderezos", "precio" : 2860, "stock" : 35 }
+{ "_id" : ObjectId("61e829666b5f4c0ac6d57563"), "nombre" : "Ketchup", "categoria" : "Aderezos", "precio" : 3350, "stock" : 32 }
+{ "_id" : ObjectId("61e8297c6b5f4c0ac6d57564"), "nombre" : "Savora", "categoria" : "Aderezos", "precio" : 4320, "stock" : 12 }
+{ "_id" : ObjectId("61e829916b5f4c0ac6d57565"), "nombre" : "SalsaGolf", "categoria" : "Aderezos", "precio" : 4990, "stock" : 10 }
+> db.productos.stats()
+{
+	"ns" : "ecommerce.productos",
+	"size" : 962,
+	"count" : 10,
+	"avgObjSize" : 96,
+	"storageSize" : 36864,
+	"freeStorageSize" : 16384,
+	"capped" : false,
+	"wiredTiger" :
+> db.productos.insert({nombre:'Barbacoa', categoria:'Aderezos', precio:4990, stock:8})
+WriteResult({ "nInserted" : 1 })
+> db.productos.find({nombre:"Barbacoa"})
+{ "_id" : ObjectId("61e82bb2449c3462ec3a36f4"), "nombre" : "Barbacoa", "categoria" : "Aderezos", "precio" : 4990, "stock" : 8 }
+> db.productos.find({"precio":{$lt:1000}})
+{ "_id" : ObjectId("61e828756b5f4c0ac6d5755c"), "nombre" : "Fideos", "categoria" : "Harina", "precio" : 120, "stock" : 20 }
+{ "_id" : ObjectId("61e828936b5f4c0ac6d5755d"), "nombre" : "Harina 0000", "categoria" : "Harina", "precio" : 580, "stock" : 30 }
+{ "_id" : ObjectId("61e828ae6b5f4c0ac6d5755e"), "nombre" : "Leche", "categoria" : "Lacteos", "precio" : 900, "stock" : 15 }
+> db.getCollection('productos').find({$and: [{"precio": {$gte: 1000}},{"precio": {$lte:3000}}]})
+{ "_id" : ObjectId("61e828be6b5f4c0ac6d5755f"), "nombre" : "Yogurt", "categoria" : "Lacteos", "precio" : 1280, "stock" : 15 }
+{ "_id" : ObjectId("61e828df6b5f4c0ac6d57560"), "nombre" : "CocaCola", "categoria" : "Bebida", "precio" : 1700, "stock" : 40 }
+{ "_id" : ObjectId("61e828f46b5f4c0ac6d57561"), "nombre" : "Sprite", "categoria" : "Bebida", "precio" : 2300, "stock" : 40 }
+{ "_id" : ObjectId("61e8294a6b5f4c0ac6d57562"), "nombre" : "Mayonesa", "categoria" : "Aderezos", "precio" : 2860, "stock" : 35 }
+> db.productos.find({"precio":{$gt:3000}})
+{ "_id" : ObjectId("61e829666b5f4c0ac6d57563"), "nombre" : "Ketchup", "categoria" : "Aderezos", "precio" : 3350, "stock" : 32 }
+{ "_id" : ObjectId("61e8297c6b5f4c0ac6d57564"), "nombre" : "Savora", "categoria" : "Aderezos", "precio" : 4320, "stock" : 12 }
+{ "_id" : ObjectId("61e829916b5f4c0ac6d57565"), "nombre" : "SalsaGolf", "categoria" : "Aderezos", "precio" : 4990, "stock" : 10 }
+{ "_id" : ObjectId("61e82bb2449c3462ec3a36f4"), "nombre" : "Barbacoa", "categoria" : "Aderezos", "precio" : 4990, "stock" : 8 }
+> db.getCollection('productos').find().sort({"precio":1}).skip(2).limit(1)
+{ "_id" : ObjectId("61e828ae6b5f4c0ac6d5755e"), "nombre" : "Leche", "categoria" : "Lacteos", "precio" : 900, "stock" : 15 }
+db.getCollection('productos').update({"precio": {$gt: 0}}, {$set: {"stock2":100}},{"multi":true})
+Updated 11 existing record(s) in 2ms
+db.getCollection('productos').update({"precio": {$gt: 4000}}, {$set: {"stock2":0}},{"multi":true})
+Updated 3 existing record(s) in 3ms
+db.getCollection('productos').remove({"precio": {$lt: 1000}},{"multi":true})
+Removed 3 record(s) in 1ms
+db.productos.createUser({user:"pepe", pwd:"asd456", roles: [{role:"read, db: "ecommerce"}]})
