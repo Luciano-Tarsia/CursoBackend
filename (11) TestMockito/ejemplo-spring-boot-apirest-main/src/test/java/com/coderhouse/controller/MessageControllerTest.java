@@ -77,6 +77,20 @@ public class MessageControllerTest {
         Assert.notNull(message, "Mensaje no nula");
         Assert.isTrue(message.getId() == 1, "ID del mensaje OK");
         Assert.isTrue(message.getDescription().equals("Mensaje-ABCD"), "Descripción del mensaje OK");
+    }
 
+    @Test
+    public void testGetByDescription() throws Exception {
+        var result = mockMvc.perform(get("/coder-house/mensajes?description=Mensaje-ABCD"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("Mensaje-ABCD")))
+                .andReturn();
+        
+        String content = result.getResponse().getContentAsString();
+        List<Message> messageValues = mapper.readValue(content, List.class);
+        Assert.notNull(messageValues, "La lista de mensajes es nula");
+        Assert.notEmpty(messageValues, "La lista de mensajes esta vacia");
+        Assert.isTrue(messageValues.size() == 3, "La lista no tiene la longitud que tendria que tener");
     }
 }
