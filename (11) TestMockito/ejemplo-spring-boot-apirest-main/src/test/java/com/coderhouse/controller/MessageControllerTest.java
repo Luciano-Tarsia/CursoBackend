@@ -86,7 +86,7 @@ public class MessageControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("Mensaje-ABCD")))
                 .andReturn();
-        
+
         String content = result.getResponse().getContentAsString();
         List<Message> messageValues = mapper.readValue(content, List.class);
         Assert.notNull(messageValues, "La lista de mensajes es nula");
