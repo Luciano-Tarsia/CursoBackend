@@ -4,12 +4,14 @@ import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.Id;
+import java.io.Serializable;
 
 @ToString
 @Getter
 @Setter
+@Builder
 @Document("restaurantes")
-public class Restaurante {
+public class Restaurante implements Serializable {
     @Id
     private Long id;
     private String nombre;

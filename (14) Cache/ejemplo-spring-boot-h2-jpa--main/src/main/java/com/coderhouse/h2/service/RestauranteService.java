@@ -1,5 +1,6 @@
 package com.coderhouse.h2.service;
 
+import com.coderhouse.h2.cache.CacheClient;
 import com.coderhouse.h2.model.Restaurante;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -8,21 +9,19 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.text.SimpleDateFormat;
 import java.util.Map;
 
-
 @Service
 @RequiredArgsConstructor
 public class RestauranteService {
 
     @Autowired
-    private MongoTemplate mongoTemplate;
     private final ObjectMapper mapper;
+    private final CacheClient<Restaurante> cache;
 
     private static final Logger log = LoggerFactory.getLogger(RestauranteService.class);
 
@@ -38,7 +37,21 @@ public class RestauranteService {
             mapperToMap(restaurante);
             mapperToClass(restaurante);
 
-            return mongoTemplate.save(restaurante);
+            return saveRestaurantInCache(restaurante);
+        } catch (JsonProcessingException e) {
+            log.error("Error converting message to string", e);
+        }
+        return restaurante;
+    }
+
+    public Restaurante findByKey(String key) {
+        Restaurante restaurante = cache.recover(key, Restaurante.class);
+        try {
+            mapperToString(restaurante);
+            mapperToMap(restaurante);
+            mapperToClass(restaurante);
+
+            return restaurante;
         } catch (JsonProcessingException e) {
             log.error("Error converting message to string", e);
         }
@@ -64,6 +77,10 @@ public class RestauranteService {
     public Map<String, Restaurante> restauranteStringToMap(String restaurante) throws  JsonProcessingException{
         Map<String, Restaurante> resMap = mapper.readValue(restaurante, Map.class);
         return resMap;
+    }
+
+    private Restaurante saveRestaurantInCache(Restaurante restaurante) throws JsonProcessingException{
+        return cache.save(restaurante.getId().toString(), restaurante);
     }
 
 }
