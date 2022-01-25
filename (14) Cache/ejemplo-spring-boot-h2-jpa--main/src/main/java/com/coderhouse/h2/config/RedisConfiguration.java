@@ -21,7 +21,7 @@ public class RedisConfiguration {
 
     @Bean
     public JedisConnectionFactory jedisConnectionFactory() {
-        var config = new RedisStandaloneConfiguration(redisProperties.getHost(), redisProperties.getPort());
+        var config = new RedisStandaloneConfiguration("127.0.0.1", 6379);
         return new JedisConnectionFactory(config);
     }
 
