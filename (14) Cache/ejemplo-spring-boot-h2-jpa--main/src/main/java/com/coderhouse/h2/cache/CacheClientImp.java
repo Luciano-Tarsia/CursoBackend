@@ -27,7 +27,7 @@ public class CacheClientImp<T> implements CacheClient<T> {
     @PostConstruct
     void setHashOperations() {
         hashOperations = this.redisTemplate.opsForHash();
-        this.redisTemplate.expire("mensaje-map", Duration.ofMillis(6000));
+        this.redisTemplate.expire("mensaje-map", Duration.ofMillis(properties.getTimeOfLife()));
     }
 
     @Override
