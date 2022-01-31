@@ -43,7 +43,7 @@ class ArrayProductsApplicationTests {
 
 	@BeforeEach
 	public void urlMethod(){
-		url = String.format("http://localhost:/%d/api/", port);
+		url = String.format("http://localhost:%d/api/", port);
 	}
 
 	@BeforeEach
@@ -83,7 +83,8 @@ class ArrayProductsApplicationTests {
 		String urlTest = url + "productos";
 		Product productoPost = this.restTemplate.postForObject(urlTest, (new Product("Leche", (Integer)10, (Integer)0)) , Product.class);
 		Assert.notNull(productoPost, "Null - Test 3");
-		Assert.isTrue(productoPost.getId() == 1, "ID error - Test 3");
+		logger.info(productoPost.getId());
+		Assert.isTrue(productoPost.getId() == 2, "ID error - Test 3 {}");
 		Assert.isTrue(productoPost.getTitle().equals("Leche"), "Name error - Test 3");
 	}
 

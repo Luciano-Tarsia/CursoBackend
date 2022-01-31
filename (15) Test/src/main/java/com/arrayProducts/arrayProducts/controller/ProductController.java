@@ -19,7 +19,7 @@ public class ProductController {
 
     @PostConstruct
     private void addProducts(){
-        Product product = new Product("Harina", (Integer)10 , id);
+        Product product = new Product("Harina", (Integer)10 , (Integer) productList.size());
         productList.add(product);
     }
 
@@ -42,13 +42,12 @@ public class ProductController {
     }
 
     @PostMapping(path = "/productos")
-    public String addProduct(@RequestBody Map<String,String> requestParam) {
+    public Product addProduct(@RequestBody Map<String,String> requestParam) {
         String title = requestParam.get("title");
         String price = requestParam.get("price");
-        Product product = new Product(title, Integer.parseInt(price), id);
-        id = id + 1;
+        Product product = new Product(title, Integer.parseInt(price), productList.size());
         productList.add(product);
         product.setId(productList.size());
-        return "Se agrego un nuevo producto con precio: " + price;
+        return product;
     }
 }
