@@ -25,15 +25,13 @@ public class UserService {
 
     @Autowired
     private MongoRepository mongoRepository;
-
-    @Autowired
-    Factory userFactory;
+    private final Factory userFactory = new Factory();
 
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     public Usuario crearUsuario(Usuario usuario){
         logger.info("Creación");
-        Usuario usuarioDeFactory = userFactory.crearUsuario(usuario.getNombre(), usuario.getTipo());
+        Usuario usuarioDeFactory =  userFactory.crearUsuario(usuario.getNombre(), usuario.getTipo());
         if(usuarioDeFactory == null){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El usuario ingresado no es valido");
         }

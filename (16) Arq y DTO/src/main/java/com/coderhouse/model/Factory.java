@@ -1,9 +1,11 @@
 package com.coderhouse.model;
 
 import com.coderhouse.service.UserService;
+import lombok.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@Data
 public class Factory {
 
     private static final Logger logger = LoggerFactory.getLogger(Factory.class);

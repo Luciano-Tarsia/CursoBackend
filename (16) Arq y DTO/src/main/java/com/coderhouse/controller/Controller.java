@@ -3,6 +3,7 @@ package com.coderhouse.controller;
 import com.coderhouse.handle.ExceptionUsuario;
 import com.coderhouse.model.Usuario;
 import com.coderhouse.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping(path = "/coder")
 public class Controller {
 
